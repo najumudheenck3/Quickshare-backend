@@ -13,7 +13,7 @@ const app = (0, express_1.default)();
 const port = 5000;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: ['*'],
+    origin: ['https://www.quickshare.giftto.online'],
     // origin: ['https://www.quickshare.giftto.online'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS'],
     credentials: true,

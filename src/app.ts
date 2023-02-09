@@ -10,7 +10,7 @@ const port: Number = 5000;
 
 app.use(express.json());
 app.use(CORS({
-    origin: ['*'],
+    origin: ['https://www.quickshare.giftto.online'],
     // origin: ['https://www.quickshare.giftto.online'],
     methods: ['GET', 'POST','PUT','DELETE','HEAD', 'OPTIONS'],
     credentials: true,
