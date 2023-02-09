@@ -15,7 +15,7 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: ['*'],
     // origin: ['https://www.quickshare.giftto.online'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE',],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS'],
     credentials: true,
     exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']
 }));
