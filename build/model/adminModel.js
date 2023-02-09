@@ -10,6 +10,15 @@ const adminSchema = new mongoose_1.Schema({
     },
     password: {
         type: String
-    }
+    },
+    notification: [{
+            userId: {
+                type: mongoose_1.Schema.Types.ObjectId,
+                ref: "user"
+            },
+            text: {
+                type: String
+            }
+        }]
 });
 exports.default = (0, mongoose_1.model)('admin', adminSchema);

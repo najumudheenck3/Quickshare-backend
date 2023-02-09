@@ -42,10 +42,84 @@ const UserSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    phoneNumber: {
+        type: Number,
+    },
+    private: {
+        type: Boolean,
+        default: false,
+    },
     verified: {
         type: Boolean,
         default: false,
-    }
+    },
+    isActive: {
+        type: Boolean,
+        default: true,
+    },
+    dob: {
+        type: Date,
+    },
+    address: {
+        type: String,
+    },
+    city: {
+        type: String,
+    },
+    country: {
+        type: String,
+    },
+    postalCode: {
+        type: Number,
+    },
+    profileImage: {
+        type: String,
+    },
+    coverImage: {
+        type: String,
+    },
+    about: {
+        type: String,
+    },
+    requests: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "user",
+        },
+    ],
+    followers: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "user",
+        },
+    ],
+    following: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "user",
+        },
+    ],
+    savedPost: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "post",
+        }
+    ],
+    notification: [{
+            postId: {
+                type: mongoose_1.default.Types.ObjectId,
+                ref: "post"
+            },
+            userId: {
+                type: mongoose_1.default.Types.ObjectId,
+                ref: "user"
+            },
+            text: {
+                type: String
+            }
+        }]
+}, {
+    timestamps: true,
 });
 // Export the model and return your IUser interface
 exports.default = mongoose_1.default.model("user", UserSchema);
