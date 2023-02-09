@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://www.connect.techmart.tech');
+  res.setHeader('Access-Control-Allow-Origin', 'https://www.quickshare.giftto.online');
 
   
   // Request methods you wish to allow
