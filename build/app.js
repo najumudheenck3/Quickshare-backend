@@ -12,14 +12,13 @@ const AdminRoute = require('./routes/adminRoute');
 const app = (0, express_1.default)();
 const port = 5000;
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
-// app.use(CORS({
-//     origin: ['http://localhost:3000'],
-//     // origin: ['https://www.quickshare.giftto.online'],
-//     methods: ['GET', 'POST','PUT','DELETE', 'HEAD'],
-//     credentials: true,
-//     exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']},
-//     ))
+app.use((0, cors_1.default)({
+    origin: ['*'],
+    // origin: ['https://www.quickshare.giftto.online'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE',],
+    credentials: true,
+    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']
+}));
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
 //   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');

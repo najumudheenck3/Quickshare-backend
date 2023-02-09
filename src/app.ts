@@ -9,14 +9,13 @@ const app: Application = express();
 const port: Number = 5000;
 
 app.use(express.json());
-app.use(CORS())
-// app.use(CORS({
-//     origin: ['http://localhost:3000'],
-//     // origin: ['https://www.quickshare.giftto.online'],
-//     methods: ['GET', 'POST','PUT','DELETE', 'HEAD'],
-//     credentials: true,
-//     exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']},
-//     ))
+app.use(CORS({
+    origin: ['*'],
+    // origin: ['https://www.quickshare.giftto.online'],
+    methods: ['GET', 'POST','PUT','DELETE',],
+    credentials: true,
+    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']},
+    ))
 
 // app.use(function (req, res, next) {
 
