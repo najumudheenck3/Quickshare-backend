@@ -9,29 +9,31 @@ const app: Application = express();
 const port: Number = 5000;
 
 app.use(express.json());
-// app.use(CORS({
-//     origin: ['https://quickshare.giftto.online'],
-//     methods: ['GET', 'POST','PUT','DELETE'],
-//     credentials: true,
-//     exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']},
-//     ))
+app.use(CORS({
+    // origin: ['http://localhost:3000'],
+    origin: ['https://www.quickshare.giftto.online'],
+    methods: ['GET', 'POST','PUT','DELETE', 'HEAD'],
+    credentials: true,
+    exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']},
+    ))
 
-app.use(function (req, res, next) {
+// app.use(function (req, res, next) {
 
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://www.quickshare.giftto.online');
+//   // Website you wish to allow to connect
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   // res.setHeader('Access-Control-Allow-Origin', 'https://www.quickshare.giftto.online');
 
   
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//   // Request methods you wish to allow
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   
-  // Pass to next layer of middleware
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   // Pass to next layer of middleware
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-  next();
-});
+//   next();
+// });
 
 app.use('/',UserRoute)
 app.use('/admin',AdminRoute)
