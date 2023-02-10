@@ -42,9 +42,10 @@ const sendEmail = (email, subject, text) => __awaiter(void 0, void 0, void 0, fu
     console.log("11111");
     try {
         const transporter = nodemailer_1.default.createTransport({
-            host: process.env.HOST,
-            port: 465,
-            secure: true,
+            // host: process.env.HOST,
+            // port: 465,
+            // secure: true,
+            service: 'gmail',
             auth: {
                 user: process.env.USER,
                 pass: process.env.PASS,
