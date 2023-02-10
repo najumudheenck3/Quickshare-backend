@@ -203,7 +203,7 @@ export const createShorts = async (req: Request, res: Response) => {
 
 export const getShorts = async (req: Request, res: Response) => {
   try {
-    const allShorts = await postModel.find({shorts:{$exists :true}}).populate("userId");
+    const allShorts = await postModel.find({shorts:{$ne:null}}).populate("userId");
    
     return res.json({ data: allShorts.reverse(), success: true });
   } catch (error) {}

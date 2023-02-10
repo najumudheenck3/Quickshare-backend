@@ -219,7 +219,7 @@ const createShorts = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.createShorts = createShorts;
 const getShorts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const allShorts = yield postModel_1.default.find({ shorts: { $exists: true } }).populate("userId");
+        const allShorts = yield postModel_1.default.find({ shorts: { $ne: null } }).populate("userId");
         return res.json({ data: allShorts.reverse(), success: true });
     }
     catch (error) { }
