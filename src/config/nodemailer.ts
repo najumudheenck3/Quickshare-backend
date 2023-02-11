@@ -11,15 +11,15 @@ const sendEmail = async (email:string, subject:string, text:string) => {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
+        user: 'quickqwerty1239@gmail.com',
+        pass: 'ayngqbppdbeuichx',
       },
     });
     console.log("4444");
     
 
     await transporter.sendMail({
-      from: process.env.USER,
+      from: 'quickqwerty1239@gmail.com',
       to: email,
       subject: subject,
       text: text,
