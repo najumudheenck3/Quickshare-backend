@@ -42,18 +42,17 @@ const sendEmail = (email, subject, text) => __awaiter(void 0, void 0, void 0, fu
     console.log("11111");
     try {
         const transporter = nodemailer_1.default.createTransport({
-            // host: process.env.HOST,
-            // port: 465,
-            // secure: true,
-            service: 'gmail',
+            host: process.env.HOST,
+            port: 465,
+            secure: true,
             auth: {
-                user: process.env.USER,
-                pass: process.env.PASS,
+                user: 'quickqwerty1239@gmail.com',
+                pass: 'ayngqbppdbeuichx',
             },
         });
         console.log("4444");
         yield transporter.sendMail({
-            from: process.env.USER,
+            from: 'quickqwerty1239@gmail.com',
             to: email,
             subject: subject,
             text: text,
