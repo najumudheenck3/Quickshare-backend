@@ -13,23 +13,12 @@ const app = (0, express_1.default)();
 const port = 5000;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
+    // origin: ['http://localhost:3000'],
     origin: ['https://www.quickshare.giftto.online'],
-    // origin: ['https://www.quickshare.giftto.online'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD'],
     credentials: true,
     exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']
 }));
-// app.use(function (req, res, next) {
-//   // Website you wish to allow to connect
-//   // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   res.setHeader('Access-Control-Allow-Origin', 'https://www.quickshare.giftto.online');
-//   // Request methods you wish to allow
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE,HEAD');
-//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//   // Pass to next layer of middleware
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
 app.use('/', UserRoute);
 app.use('/admin', AdminRoute);
 dbConnect;

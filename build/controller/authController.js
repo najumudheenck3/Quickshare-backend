@@ -18,7 +18,7 @@ const tokenModel_1 = __importDefault(require("../model/tokenModel"));
 const nodemailer_1 = __importDefault(require("../config/nodemailer"));
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("llll");
     console.log(req.body);
@@ -26,8 +26,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const userExist = yield userModel_1.default.findOne({ email });
         if (userExist) {
-            return res
-                .json({ message: "This user already exist", success: false });
+            return res.json({ message: "This user already exist", success: false });
         }
         const salt = yield bcrypt.genSalt(10);
         const hashedPassword = yield bcrypt.hash(password, salt);
@@ -64,7 +63,10 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.json({ message: "Invalid Credentials", success: false });
         }
         if (!user.verified) {
-            return res.json({ message: "send a link to your mail,please confirm", success: false });
+            return res.json({
+                message: "send a link to your mail,please confirm",
+                success: false,
+            });
         }
         if (!user.isActive) {
             return res.json({ message: "Blodked you", success: false });
@@ -79,13 +81,19 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //generate token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             //expire the token within
-            expiresIn: "1d"
+            expiresIn: "1d",
         });
-        user.password = '';
-        res.status(200).json({ message: "SignIn Successfully", success: true, data: token, user: user });
+        user.password = "";
+        res
+            .status(200)
+            .json({
+            message: "SignIn Successfully",
+            success: true,
+            data: token,
+            user: user,
+        });
     }
-    catch (error) {
-    }
+    catch (error) { }
 });
 exports.loginUser = loginUser;
 const verifyAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -115,7 +123,7 @@ const verifyAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 success: false,
             });
         }
-        console.log(user._id, 'ibidyanoo thettunnat');
+        console.log(user._id, "ibidyanoo thettunnat");
         yield userModel_1.default.findByIdAndUpdate(user._id, { verified: true });
         yield tokenModel_1.default.findByIdAndRemove(userToken._id);
         return res.json({ message: "email verified sucessfully", success: true });

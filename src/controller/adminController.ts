@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import adminModel from "../model/adminModel";
+import postModel from "../model/postModel";
 import userModel from "../model/userModel";
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+
+
 
 export const loginAdmin = async (req: Request, res: Response) => {
   console.log(req.body);
@@ -43,7 +46,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     console.log("adminlogindata");
-    const allUsers = await userModel.find({});
+    const allUsers = await userModel.find({verified:true});
     res.status(200).send({
       message: "Users fetched successfully",
       success: true,
@@ -116,13 +119,55 @@ export const fetDashboardDetails=async (req: Request, res: Response)=>{
   try {
     const userCount=await userModel.find({}).count()
     const activeCount=await userModel.find({isActive:true}).count()
-    console.log(activeCount,'userCountuserCount');
+    const userGraph = await userModel.aggregate([
+      { 
+        $match: { 
+          verified:{
+          $eq:true
+          }
+        } 
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          count: { $sum: 1 }
+        
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      },
+      {
+        $limit: 7
+    }
+    ])
+
+    const postGraph = await postModel.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          count: { $sum: 1 }
+        
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      },
+      {
+        $limit: 7
+    }
+    ])
+  
+    
     res.status(200).send({
       message: "all datas fetched successfully",
       success: true,
       userCount: userCount,
       activeCount:activeCount,
+      userGraph:userGraph,
+      postGraph:postGraph
     });
+    
   } catch (error) {
     
   }

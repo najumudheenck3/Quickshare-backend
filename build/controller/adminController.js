@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetDashboardDetails = exports.getAllNotification = exports.changeUserStatus = exports.getAllUsers = exports.loginAdmin = void 0;
 const adminModel_1 = __importDefault(require("../model/adminModel"));
+const postModel_1 = __importDefault(require("../model/postModel"));
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -54,7 +55,7 @@ exports.loginAdmin = loginAdmin;
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log("adminlogindata");
-        const allUsers = yield userModel_1.default.find({});
+        const allUsers = yield userModel_1.default.find({ verified: true });
         res.status(200).send({
             message: "Users fetched successfully",
             success: true,
@@ -124,12 +125,48 @@ const fetDashboardDetails = (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         const userCount = yield userModel_1.default.find({}).count();
         const activeCount = yield userModel_1.default.find({ isActive: true }).count();
-        console.log(activeCount, 'userCountuserCount');
+        const userGraph = yield userModel_1.default.aggregate([
+            {
+                $match: {
+                    verified: {
+                        $eq: true
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { _id: 1 }
+            },
+            {
+                $limit: 7
+            }
+        ]);
+        const postGraph = yield postModel_1.default.aggregate([
+            {
+                $group: {
+                    _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { _id: 1 }
+            },
+            {
+                $limit: 7
+            }
+        ]);
         res.status(200).send({
             message: "all datas fetched successfully",
             success: true,
             userCount: userCount,
             activeCount: activeCount,
+            userGraph: userGraph,
+            postGraph: postGraph
         });
     }
     catch (error) {
