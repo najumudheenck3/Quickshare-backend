@@ -125,6 +125,8 @@ const fetDashboardDetails = (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         const userCount = yield userModel_1.default.find({}).count();
         const activeCount = yield userModel_1.default.find({ isActive: true }).count();
+        const totalPosts = yield postModel_1.default.find({ shorts: null }).count();
+        const totalShorts = yield postModel_1.default.find({ shorts: { $ne: null } }).count();
         const userGraph = yield userModel_1.default.aggregate([
             {
                 $match: {
@@ -166,7 +168,9 @@ const fetDashboardDetails = (req, res) => __awaiter(void 0, void 0, void 0, func
             userCount: userCount,
             activeCount: activeCount,
             userGraph: userGraph,
-            postGraph: postGraph
+            postGraph: postGraph,
+            totalPosts,
+            totalShorts
         });
     }
     catch (error) {
