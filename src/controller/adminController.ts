@@ -119,6 +119,8 @@ export const fetDashboardDetails=async (req: Request, res: Response)=>{
   try {
     const userCount=await userModel.find({}).count()
     const activeCount=await userModel.find({isActive:true}).count()
+    const totalPosts=await postModel.find({shorts:null}).count()
+    const totalShorts=await postModel.find({shorts:{$ne:null}}).count()
     const userGraph = await userModel.aggregate([
       { 
         $match: { 
@@ -157,15 +159,15 @@ export const fetDashboardDetails=async (req: Request, res: Response)=>{
         $limit: 7
     }
     ])
-  
-    
     res.status(200).send({
       message: "all datas fetched successfully",
       success: true,
       userCount: userCount,
       activeCount:activeCount,
       userGraph:userGraph,
-      postGraph:postGraph
+      postGraph:postGraph,
+      totalPosts,
+      totalShorts
     });
     
   } catch (error) {
